@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manisha Tripathi, Social Media Management</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Petrona:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#2B0F16;
+    --paper:#F1E9DC;
+    --paper-bright:#FBF7F0;
+    --gold:#B8863E;
+    --rust:#8C3B2A;
+    --muted:#6B5C4F;
+    --line:rgba(43,15,22,0.18);
+    --radius:3px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans',sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Petrona',serif;
+    font-weight:500;
+    margin:0;
+    color:var(--ink);
+  }
+  p{margin:0 0 1em 0; color:var(--muted); max-width:62ch;}
+  a{color:inherit;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 32px;}
+  @media (max-width:640px){ .wrap{padding:0 20px;} }
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky; top:0; z-index:10;
+    background:rgba(241,233,220,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-row{display:flex; align-items:center; justify-content:space-between; padding:18px 0;}
+  .brand{font-family:'Petrona',serif; font-size:1.25rem; font-weight:600; letter-spacing:0.01em;}
+  nav ul{list-style:none; display:flex; gap:28px; margin:0; padding:0;}
+  nav a{text-decoration:none; font-size:0.95rem; color:var(--ink); border-bottom:1px solid transparent; padding-bottom:2px; transition:border-color .2s;}
+  nav a:hover{border-color:var(--gold);}
+  @media (max-width:640px){ nav ul{gap:16px;} nav a{font-size:0.85rem;} }
+
+  /* ---------- hero ---------- */
+  .hero{padding:76px 0 64px;}
+  .hero-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center;}
+  @media (max-width:860px){ .hero-grid{grid-template-columns:1fr; gap:40px;} }
+  .hero h1{font-size:clamp(2.1rem,4.2vw,3.15rem); line-height:1.12; letter-spacing:-0.01em;}
+  .hero p.lede{font-size:1.08rem; margin-top:20px; color:var(--ink); opacity:0.75; max-width:46ch;}
+  .cta-row{display:flex; gap:14px; margin-top:32px; flex-wrap:wrap;}
+  .btn{
+    display:inline-block; padding:12px 24px; font-size:0.95rem; font-weight:500;
+    border-radius:var(--radius); text-decoration:none; cursor:pointer; border:1px solid var(--ink);
+    transition:background .2s, color .2s;
+  }
+  .btn-primary{background:var(--ink); color:var(--paper-bright);}
+  .btn-primary:hover{background:var(--rust); border-color:var(--rust);}
+  .btn-ghost{background:transparent; color:var(--ink);}
+  .btn-ghost:hover{background:rgba(43,15,22,0.06);}
+
+  /* content-calendar hero graphic */
+  .calendar{
+    border:1px solid var(--line); border-radius:var(--radius);
+    background:var(--paper-bright); padding:18px;
+  }
+  .calendar-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:14px;}
+  .calendar-head span{font-size:0.8rem; color:var(--muted);}
+  .cal-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:6px;}
+  .cal-cell{
+    aspect-ratio:1; border:1px solid var(--line); border-radius:2px;
+    display:flex; align-items:flex-end; justify-content:flex-start; padding:4px;
+    font-size:0.62rem; color:var(--muted); position:relative;
+    opacity:0; animation:reveal .5s ease forwards;
+  }
+  .cal-cell b{position:absolute; top:4px; left:4px; font-size:0.6rem; color:var(--muted); font-weight:500;}
+  .cal-cell.on{background:rgba(184,134,62,0.16); border-color:var(--gold);}
+  .cal-cell.on2{background:rgba(140,59,42,0.14); border-color:var(--rust);}
+  @keyframes reveal{ to{opacity:1; transform:translateY(0);} from{opacity:0; transform:translateY(4px);} }
+
+  /* ---------- credibility strip ---------- */
+  .strip{border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:22px 0;}
+  .strip .wrap{display:flex; flex-wrap:wrap; align-items:center; gap:10px 28px;}
+  .strip .label{font-size:0.88rem; color:var(--muted); white-space:nowrap;}
+  .strip .names{display:flex; flex-wrap:wrap; gap:8px 24px; font-family:'Petrona',serif; font-size:1rem; color:var(--ink);}
+
+  /* results */
+  .stats-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;}
+  @media (max-width:760px){ .stats-grid{grid-template-columns:repeat(2,1fr);} }
+  .stat-cell{background:var(--paper-bright); padding:26px 20px; text-align:left;}
+  .stat-cell .num{font-family:'Petrona',serif; font-size:1.9rem; color:var(--rust); display:block; margin-bottom:6px;}
+  .stat-cell .cap{font-size:0.85rem; color:var(--muted);}
+
+  /* case studies */
+  .case-grid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;}
+  @media (max-width:760px){ .case-grid{grid-template-columns:1fr;} }
+  .case-card{background:var(--paper-bright); padding:26px 28px;}
+  .case-card .scope{font-size:0.78rem; color:var(--gold); font-weight:600; text-transform:none; margin-bottom:6px; display:block;}
+  .case-card h3{font-size:1.15rem; margin-bottom:10px;}
+  .case-card p{font-size:0.92rem; margin-bottom:12px;}
+  .case-card .result{font-size:0.85rem; color:var(--rust); font-weight:500; margin:0; border-top:1px solid var(--line); padding-top:10px;}
+
+  .case-group{background:var(--paper-bright); border:1px solid var(--line); border-radius:var(--radius); padding:26px 28px; margin-bottom:1px;}
+  .case-group-head{display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:10px; margin-bottom:16px;}
+  .case-group-head h3{font-size:1.15rem;}
+  .case-group-head .badge{font-size:0.82rem; color:var(--rust); font-weight:600;}
+  .mini-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  @media (max-width:760px){ .mini-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:520px){ .mini-grid{grid-template-columns:1fr;} }
+  .mini-item{border-top:1px solid var(--line); padding-top:12px;}
+  .mini-item h4{font-family:'Petrona',serif; font-weight:500; font-size:0.98rem; margin-bottom:6px;}
+  .mini-item p{font-size:0.85rem; margin:0; color:var(--muted);}
+
+  /* clean work list */
+  .work-list{border-top:1px solid var(--line);}
+  .work-row{
+    display:grid; grid-template-columns:200px 1fr 190px; gap:20px;
+    padding:18px 0; border-bottom:1px solid var(--line); align-items:baseline;
+  }
+  @media (max-width:760px){ .work-row{grid-template-columns:1fr; gap:4px; padding:16px 0;} }
+  .work-row .who{display:flex; flex-direction:column; gap:2px;}
+  .work-row .who a{font-family:'Petrona',serif; font-size:1.05rem; color:var(--ink); text-decoration:none; border-bottom:1px solid var(--gold);}
+  .work-row .who a:hover{color:var(--rust); border-color:var(--rust);}
+  .work-row .who span{font-size:0.76rem; color:var(--gold);}
+  .work-row .what{font-size:0.9rem; color:var(--muted); margin:0;}
+  .work-row .result{font-size:0.85rem; color:var(--rust); text-align:left;}
+  .work-row .result:empty{display:none;}
+  @media (max-width:760px){ .work-row .result{margin-top:2px;} }
+  .work-row{transition:background .18s;}
+  .work-row:hover{background:rgba(184,134,62,0.06); margin:0 -20px; padding-left:20px; padding-right:20px;}
+  @media (max-width:760px){ .work-row:hover{margin:0; padding-left:0; padding-right:0;} }
+  .work-subhead{padding:26px 0 10px; font-family:'Petrona',serif; font-size:1.05rem; color:var(--ink); border-top:1px solid var(--line);}
+  .work-subhead:first-child{border-top:none; padding-top:0;}
+  .work-group.direct .work-row{border-left:3px solid var(--gold); padding-left:18px;}
+  .work-group.agency .work-row{border-left:3px solid var(--rust); padding-left:18px;}
+  @media (max-width:760px){ .work-group.direct .work-row, .work-group.agency .work-row{padding-left:14px;} }
+
+  /* ---------- section shell ---------- */
+  section{padding:72px 0;}
+  .section-head{max-width:56ch; margin-bottom:40px;}
+  .section-head h2{font-size:clamp(1.6rem,2.8vw,2.1rem);}
+  .section-head p{margin-top:12px;}
+
+  /* about */
+  .about-row{display:grid; grid-template-columns:1fr 1fr; gap:48px;}
+  @media (max-width:760px){ .about-row{grid-template-columns:1fr;} }
+  .about-row p{max-width:52ch; font-size:1.02rem;}
+
+  /* services */
+  .services-list{border-top:1px solid var(--line);}
+  .service-row{
+    display:grid; grid-template-columns:220px 1fr; gap:24px;
+    padding:22px 0; border-bottom:1px solid var(--line);
+  }
+  @media (max-width:640px){ .service-row{grid-template-columns:1fr; gap:6px;} }
+  .service-row h3{font-size:1.12rem; font-weight:500;}
+  .service-row p{margin:0; font-size:0.96rem;}
+
+  /* process */
+  .process{display:grid; grid-template-columns:repeat(5,1fr); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;}
+  @media (max-width:760px){ .process{grid-template-columns:1fr;} }
+  .proc-cell{padding:20px 18px; border-right:1px solid var(--line);}
+  .process .proc-cell:last-child{border-right:none;}
+  @media (max-width:760px){ .proc-cell{border-right:none; border-bottom:1px solid var(--line);} .process .proc-cell:last-child{border-bottom:none;} }
+  .proc-cell .day{font-size:0.78rem; color:var(--gold); font-weight:600; margin-bottom:8px; display:block;}
+  .proc-cell h3{font-size:1rem; font-weight:500; margin-bottom:6px;}
+  .proc-cell p{font-size:0.87rem; margin:0;}
+
+  /* pricing */
+  .pricing-grid{display:grid; grid-template-columns:repeat(3,1fr); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;}
+  @media (max-width:860px){ .pricing-grid{grid-template-columns:1fr;} }
+  .tier{padding:32px 26px; border-right:1px solid var(--line); background:var(--paper-bright); display:flex; flex-direction:column;}
+  .pricing-grid .tier:last-child{border-right:none;}
+  @media (max-width:860px){ .tier{border-right:none; border-bottom:1px solid var(--line);} .pricing-grid .tier:last-child{border-bottom:none;} }
+  .tier.featured{background:var(--paper); box-shadow:inset 0 3px 0 var(--gold);}
+  .tier .tag{font-size:0.78rem; color:var(--gold); font-weight:600; margin-bottom:10px;}
+  .tier h3{font-size:1.3rem; margin-bottom:6px;}
+  .tier .price{font-family:'Petrona',serif; font-size:1.7rem; margin:10px 0 4px;}
+  .tier .price small{font-family:'IBM Plex Sans',sans-serif; font-size:0.62rem; color:var(--muted); font-weight:400;}
+  .tier .for{font-size:0.85rem; color:var(--muted); margin-bottom:18px;}
+  .tier ul{list-style:none; margin:0 0 22px 0; padding:0; flex:1;}
+  .tier li{font-size:0.88rem; padding:8px 0; border-top:1px solid var(--line); color:var(--ink); opacity:0.85;}
+  .tier li:first-child{border-top:none;}
+  .pricing-note{margin-top:22px; font-size:0.88rem;}
+
+  /* contact */
+  .contact{background:var(--ink); color:var(--paper-bright); border-radius:var(--radius);}
+  .contact-inner{padding:56px 40px; text-align:left;}
+  @media (max-width:640px){ .contact-inner{padding:40px 24px;} }
+  .contact h2{color:var(--paper-bright); font-size:clamp(1.5rem,3vw,2rem); max-width:20ch;}
+  .contact p{color:rgba(251,247,240,0.75); margin-top:14px; max-width:48ch;}
+  .contact .btn-primary{background:var(--gold); border-color:var(--gold); color:var(--ink); margin-top:24px;}
+  .contact .btn-primary:hover{background:var(--paper-bright); border-color:var(--paper-bright);}
+
+  footer{padding:32px 0 48px; font-size:0.82rem; color:var(--muted);}
+
+  /* about header (photo + name) */
+  .about-header{display:flex; align-items:center; gap:22px; margin-bottom:36px;}
+  .avatar-photo{width:88px; height:88px; border-radius:50%; object-fit:cover; border:1px solid var(--line); flex-shrink:0;}
+  .avatar-fallback{
+    display:none; width:88px; height:88px; border-radius:50%; flex-shrink:0;
+    background:var(--ink); color:var(--paper-bright); align-items:center; justify-content:center;
+    font-family:'Petrona',serif; font-size:1.5rem; letter-spacing:0.02em;
+  }
+  .about-header h2{font-size:clamp(1.5rem,2.6vw,1.9rem);}
+  .about-header .role-tag{margin:6px 0 0; font-size:0.92rem; color:var(--muted);}
+  @media (max-width:520px){ .avatar-photo,.avatar-fallback{width:64px; height:64px;} }
+
+  /* social icon links */
+  .social-row{display:flex; gap:14px; align-items:center; margin-top:20px;}
+  .social-row a{display:inline-flex; color:var(--paper-bright); opacity:0.85; transition:opacity .2s;}
+  .social-row a:hover{opacity:1;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav-row">
+    <div class="brand">Manisha Tripathi</div>
+    <nav>
+      <ul>
+        <li><a href="#work">About</a></li>
+        <li><a href="#casework">Work</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>Social media management that stays on schedule, on brand, and off your plate.</h1>
+      <p class="lede">I plan the calendar, write the captions, brief the designer, and get the week published, so your feed runs like a system instead of a scramble.</p>
+      <div class="cta-row">
+        <a href="#pricing" class="btn btn-primary">See pricing</a>
+        <a href="#work" class="btn btn-ghost">See recent work</a>
+      </div>
+    </div>
+    <div class="calendar">
+      <div class="calendar-head">
+        <strong style="font-family:'Petrona',serif; font-size:0.95rem;">This week</strong>
+        <span>Content calendar</span>
+      </div>
+      <div class="cal-grid" id="calGrid">
+        <div class="cal-cell"><b>M</b></div>
+        <div class="cal-cell on"><b>T</b></div>
+        <div class="cal-cell"><b>W</b></div>
+        <div class="cal-cell on2"><b>T</b></div>
+        <div class="cal-cell"><b>F</b></div>
+        <div class="cal-cell on"><b>S</b></div>
+        <div class="cal-cell"><b>S</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="wrap">
+    <span class="label">Recently worked with</span>
+    <div class="names">
+      <span>MASH India</span>
+      <span>CheveuDerm</span>
+      <span>BWRT India</span>
+      <span>INI8Labs</span>
+      <span>Folk Experience</span>
+      <span>Art Centrix Space</span>
+    </div>
+  </div>
+</div>
+
+<section id="work">
+  <div class="wrap">
+    <div class="about-header">
+      <img class="avatar-photo" src="data:image/jpeg;base64,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" alt="Manisha Tripathi">
+      <div class="avatar-fallback">MT</div>
+      <div>
+        <h2>Manisha Tripathi</h2>
+        <p class="role-tag">Social media management &amp; content operations</p>
+      </div>
+    </div>
+    <div class="about-row">
+    <div>
+      <h3 style="font-size:1.05rem; margin-bottom:10px;">A bit about how I work</h3>
+      <p>I manage social media for brands that need someone who actually keeps the calendar, chases the designer, and hits publish on time. Not just someone with opinions about hashtags.</p>
+    </div>
+    <div>
+      <p>I've worked across heritage institutions — MAP, several museums under the Archaeological Survey of India, five museums through Vizara Technologies, and the cultural institution IGNCA — documenting and digitising their collections, alongside content and social strategy for galleries, agencies, and wellness brands. That range is where the habit comes from.</p>
+      <p style="font-style:italic; color:var(--gold); margin-top:18px;">"Give me the mess. I'll give you the map."</p>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section id="results" style="padding-top:0;">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="stat-cell">
+        <span class="num">30%</span>
+        <span class="cap">growth in views, reach &amp; followers at MASH India</span>
+      </div>
+      <div class="stat-cell">
+        <span class="num">7K→8K</span>
+        <span class="cap">LinkedIn followers in 3 months at INI8Labs</span>
+      </div>
+      <div class="stat-cell">
+        <span class="num">100+</span>
+        <span class="cap">articles shipped, 0 missed deadlines at E-Bibil</span>
+      </div>
+      <div class="stat-cell">
+        <span class="num">500+</span>
+        <span class="cap">articles published across 4 platforms</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="casework">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Selected work</h2>
+      <p>Every client, one line each. Click through to any of them.</p>
+    </div>
+    <div class="work-list">
+      <div class="work-group direct">
+      <div class="work-subhead">Direct &amp; freelance work</div>
+      <div class="work-row">
+        <div class="who"><a href="https://www.instagram.com/mash_india" target="_blank" rel="noopener">MASH India</a><span>Social media &amp; PR</span></div>
+        <p class="what">Ran their weekly posting schedule, wrote captions and newsletters, and answered comments/DMs across Instagram, X &amp; Facebook.</p>
+        <p class="result">30% growth in views, reach &amp; followers</p>
+      </div>
+      <div class="work-row">
+        <div class="who"><a href="https://www.linkedin.com/company/ini8-labs" target="_blank" rel="noopener">INI8Labs</a><span>Social strategy &amp; LinkedIn</span></div>
+        <p class="what">Handled everything on LinkedIn and the blog myself: what to write about, the posting calendar, and the finished posts.</p>
+        <p class="result">LinkedIn followers 7K → 8K in 3 months</p>
+      </div>
+      <div class="work-row">
+        <div class="who"><a href="https://www.instagram.com/faceyogabysavitusingh" target="_blank" rel="noopener">Zen Consultancy</a><span>Leads &amp; communication</span></div>
+        <p class="what">Reached out to leads, followed up after sales calls, tracked ad performance, and handled client scheduling and support.</p>
+        <p class="result">200+ clients handled</p>
+      </div>
+      <div class="work-row">
+        <div class="who"><a href="https://e-bibil.com" target="_blank" rel="noopener">E-Bibil Technologies</a><span>Content operations</span></div>
+        <p class="what">Ran the whole article pipeline: briefing writers, checking quality and SEO, and keeping the publishing calendar on track.</p>
+        <p class="result">100+ articles, 0 missed deadlines</p>
+      </div>
+      <div class="work-row">
+        <div class="who"><a href="https://artcentrix.com/vr/the-circle-of-life" target="_blank" rel="noopener">Art Centrix Space</a><span>Exhibition content</span></div>
+        <p class="what">Wrote copy and covered major exhibitions on Instagram from opening night through closing.</p>
+        <p class="result">Featured: The Circle of Life</p>
+      </div>
+      <div class="work-row">
+        <div class="who"><a href="https://www.instagram.com/themajikhouse" target="_blank" rel="noopener">The Majik House</a><span>Pitch decks &amp; social</span></div>
+        <p class="what">Built client-facing pitch decks and ran their Instagram, blog, and newsletters.</p>
+        <p class="result">726 post impressions on one piece</p>
+      </div>
+      <div class="work-row">
+        <div class="who"><a href="https://www.instagram.com/sbofagrosmart" target="_blank" rel="noopener">SBOF</a><span>Content strategy</span></div>
+        <p class="what">Built the content calendar and wrote the copy before the brand had posted anything at all.</p>
+        <p class="result"></p>
+      </div>
+      <div class="work-row">
+        <div class="who"><a href="https://mentlabz.com/profile/mt627523" target="_blank" rel="noopener">Mentlabz</a><span>Blogging &amp; SEO</span></div>
+        <p class="what">Started their blog from scratch and built up search traffic through consistent SEO writing.</p>
+        <p class="result">100+ blogs published</p>
+      </div>
+      </div>
+
+      <div class="work-group agency">
+      <div class="work-subhead">Client work at Bloom Media</div>
+      <div class="work-row">
+        <div class="who"><span style="font-family:'Petrona',serif; font-size:1.02rem; color:var(--ink);">Bloom Media</span><span>Agency positioning</span></div>
+        <p class="what">Built the agency's own portfolio deck and outreach system, and personally took pitches through to signed clients.</p>
+        <p class="result"></p>
+      </div>
+      <div class="work-row">
+        <div class="who"><a href="https://cheveuderm.com" target="_blank" rel="noopener">CheveuDerm</a><span>Pitch &amp; strategy</span></div>
+        <p class="what">Built the pitch deck and analysed 17 competitor accounts to shape their strategy.</p>
+        <p class="result">Turned into a retained client</p>
+      </div>
+      <div class="work-row">
+        <div class="who"><a href="https://bwrtindia.com" target="_blank" rel="noopener">BWRT India</a><span>Strategy &amp; campaign</span></div>
+        <p class="what">Wrote the proposal, set the content strategy, and ran the LinkedIn campaign for their flagship event.</p>
+        <p class="result"></p>
+      </div>
+      <div class="work-row">
+        <div class="who"><a href="https://footsecure.com" target="_blank" rel="noopener">Foot Secure</a><span>Content strategy</span></div>
+        <p class="what">Same proposal, strategy, and campaign work as BWRT India.</p>
+        <p class="result">Expanded across every platform they run</p>
+      </div>
+      <div class="work-row">
+        <div class="who"><a href="https://www.instagram.com/dfsicon2026" target="_blank" rel="noopener">DFSICON 2026</a><span>Paid social strategy</span></div>
+        <p class="what">Built a LinkedIn, Instagram &amp; Facebook strategy, rolled out in phases, to drive event attendance and sign-ups.</p>
+        <p class="result"></p>
+      </div>
+      <div class="work-row">
+        <div class="who"><a href="https://artflute.com" target="_blank" rel="noopener">Artflute</a><span>Presentation &amp; partnerships</span></div>
+        <p class="what">Built a presentation for their artist video program and put together a list of potential social media partners.</p>
+        <p class="result"></p>
+      </div>
+      <div class="work-row">
+        <div class="who"><a href="https://www.instagram.com/folk_experience" target="_blank" rel="noopener">Folk Experience</a><span>Editorial &amp; social</span></div>
+        <p class="what">Led their blog and social content end to end, from planning through publishing.</p>
+        <p class="result"></p>
+      </div>
+      </div>
+
+      <div class="work-group direct">
+      <div class="work-subhead">Heritage &amp; archival work</div>
+      <div class="work-row">
+        <div class="who"><span style="font-family:'Petrona',serif; font-size:1.02rem; color:var(--ink);">MAP · IGNCA · ASI · Vizara</span><span>Heritage documentation</span></div>
+        <p class="what">Documented and catalogued collections across five museums, for four different institutions.</p>
+        <p class="result"></p>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>What I take off your hands</h2>
+      <p>Pick the pieces you need. Most clients start with a calendar and coordination, then add reporting or audits as things settle. I plan, write, and coordinate the content; for design, video, or photography, I brief your designer or videographer rather than producing those assets myself.</p>
+    </div>
+    <div class="services-list">
+      <div class="service-row">
+        <h3>Content calendars</h3>
+        <p>A planned, on-brand posting schedule built around your goals and platforms, so you're not deciding what to post at 9pm the night before.</p>
+      </div>
+      <div class="service-row">
+        <h3>Captions &amp; reel strategy</h3>
+        <p>Captions written in your brand's voice, plus reel concepts and direction so your team knows exactly what to shoot.</p>
+      </div>
+      <div class="service-row">
+        <h3>Designer &amp; vendor coordination</h3>
+        <p>Briefing designers, videographers, and other vendors, and chasing assets so nothing holds up the week's posting.</p>
+      </div>
+      <div class="service-row">
+        <h3>Community management</h3>
+        <p>Comments and DMs monitored and answered in your voice, so the account stays responsive without you checking it constantly.</p>
+      </div>
+      <div class="service-row">
+        <h3>Social media audits</h3>
+        <p>A one-time review of what's working, what isn't, and where your accounts are leaving engagement on the table.</p>
+      </div>
+      <div class="service-row">
+        <h3>Reporting</h3>
+        <p>A plain-language monthly summary of what went out and how it performed, without you needing to read a dashboard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>A typical week</h2>
+      <p>The same rhythm every week, so nothing gets missed.</p>
+    </div>
+    <div class="process">
+      <div class="proc-cell">
+        <span class="day">Mon</span>
+        <h3>Review &amp; align</h3>
+        <p>Check last week's performance and confirm this week's priorities.</p>
+      </div>
+      <div class="proc-cell">
+        <span class="day">Tue–Wed</span>
+        <h3>Plan &amp; write</h3>
+        <p>Build the calendar, write captions, and map out reel concepts.</p>
+      </div>
+      <div class="proc-cell">
+        <span class="day">Thu</span>
+        <h3>Coordinate</h3>
+        <p>Brief designers or videographers and gather assets.</p>
+      </div>
+      <div class="proc-cell">
+        <span class="day">Fri</span>
+        <h3>Schedule</h3>
+        <p>Finalise and schedule everything for the week ahead.</p>
+      </div>
+      <div class="proc-cell">
+        <span class="day">Ongoing</span>
+        <h3>Manage &amp; report</h3>
+        <p>Community management daily, a summary at month's end.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Pricing</h2>
+      <p>Monthly retainers, priced by how much of the calendar you want handled. These are starting ranges. The final quote depends on platforms, content volume, and how much coordination is involved.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="tier">
+        <span class="tag">Foundation</span>
+        <h3>Get consistent</h3>
+        <div class="price">₹25,000–35,000<small>/month</small></div>
+        <div class="for">For early-stage brands and solo founders</div>
+        <ul>
+          <li>1–2 platforms</li>
+          <li>12–16 posts a month</li>
+          <li>Content calendar &amp; captions</li>
+          <li>Basic community management</li>
+          <li>Monthly performance summary</li>
+        </ul>
+      </div>
+      <div class="tier featured">
+        <span class="tag">Momentum</span>
+        <h3>Run it like a system</h3>
+        <div class="price">₹40,000–60,000<small>/month</small></div>
+        <div class="for">For growing brands posting regularly</div>
+        <ul>
+          <li>2–3 platforms</li>
+          <li>Calendar, captions &amp; reel strategy</li>
+          <li>Designer/vendor coordination</li>
+          <li>Daily community management</li>
+          <li>Monthly strategy call &amp; report</li>
+        </ul>
+      </div>
+      <div class="tier">
+        <span class="tag">Full Operations</span>
+        <h3>Hand off the whole calendar</h3>
+        <div class="price">From ₹80,000<small>/month</small></div>
+        <div class="for">For brands or agencies needing a full-time hand</div>
+        <ul>
+          <li>Multi-platform management</li>
+          <li>Campaign &amp; paid-social coordination</li>
+          <li>Cross-team coordination</li>
+          <li>Quarterly audits</li>
+          <li>Detailed reporting dashboard</li>
+        </ul>
+      </div>
+    </div>
+    <p class="pricing-note">One-time social media audit: ₹8,000–15,000. Multi-brand and campaign-based work quoted separately.</p>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact">
+      <div class="contact-inner">
+        <h2>Want your calendar off your plate?</h2>
+        <p>Tell me which platforms you're on and what's not getting done, and I'll put together a scope that fits.</p>
+        <div class="cta-row">
+          <a href="mailto:manishaatripathi19@gmail.com" class="btn btn-primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px; margin-right:8px;"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Email me
+          </a>
+          <a href="tel:+919667050804" class="btn btn-ghost" style="border-color:rgba(251,247,240,0.4); color:var(--paper-bright);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-3px; margin-right:8px;"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg>+91 96670 50804
+          </a>
+        </div>
+        <div class="social-row">
+          <a href="mailto:manishaatripathi19@gmail.com" aria-label="Email">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          </a>
+          <a href="tel:+919667050804" aria-label="Phone">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/manisha-tripathi-marketing" target="_blank" rel="noopener" aria-label="LinkedIn profile">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Manisha Tripathi, Social Media Management</div>
+</footer>
+
+<script>
+  document.querySelectorAll('#calGrid .cal-cell').forEach((cell, i) => {
+    cell.style.animationDelay = (i * 0.08) + 's';
+  });
+</script>
+
+</body>
+</html>
